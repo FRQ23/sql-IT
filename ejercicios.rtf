@@ -1,0 +1,122 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 -- Crear base de datos\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0  CREATE DATABASE ejercicios;
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Conectar a la base de datos\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 \\c ejercicios
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Crear tabla departamentos\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE departamentos(depClave SERIAL PRIMARY KEY, depDescripcion VARCHAR(100) NOT NUlL);
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Insertar datos en la tabla departamentos\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO departamentos (depDescripcion) VALUES ('Recursos humanos'), ('Finanzas'),('Tecnologia de la informacion'), ('Marketing'), ('Ventas');
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Crear tabla productos\
+CREATE TABLE productos (\
+    proClave VARCHAR(10) PRIMARY KEY,\
+    proDescripcion VARCHAR(100) NOT NULL,\
+    proPrecio NUMERIC NOT NULL,\
+    depClave INT NOT NULL,\
+    FOREIGN KEY (depClave) REFERENCES departamentos(depClave)\
+);\
+\
+-- Insertar datos en la tabla productos\
+INSERT INTO productos (proClave, proDescripcion, proPrecio, depClave) VALUES\
+('P001', 'Producto 1 RH', 100.00, 1),\
+('P002', 'Producto 2 RH', 200.00, 1),\
+('P003', 'Producto 3 RH', 300.00, 1),\
+('P004', 'Producto 1 Finanzas', 150.00, 2),\
+('P005', 'Producto 2 Finanzas', 250.00, 2),\
+('P006', 'Producto 3 Finanzas', 350.00, 2),\
+('P007', 'Producto 1 TI', 120.00, 3),\
+('P008', 'Producto 2 TI', 220.00, 3),\
+('P009', 'Producto 3 TI', 320.00, 3),\
+('P010', 'Producto 1 Marketing', 110.00, 4),\
+('P011', 'Producto 2 Marketing', 210.00, 4),\
+('P012', 'Producto 3 Marketing', 310.00, 4),\
+('P013', 'Producto 1 Ventas', 130.00, 5),\
+('P014', 'Producto 2 Ventas', 230.00, 5),\
+('P015', 'Producto 3 Ventas', 330.00, 5);\
+\
+-- Crear tabla clientes\
+CREATE TABLE clientes (\
+    cliClave SERIAL PRIMARY KEY,\
+    cliNombre VARCHAR(100) NOT NULL,\
+    cliDireccion VARCHAR(20) NOT NULL,\
+    cliTelefono VARCHAR(20) NOT NULL\
+);\
+\
+-- Insertar datos en la tabla clientes\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 1', 'Direccion 1', '6645568800');
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 2', 'Direccion 2', '6645648395'), ('Cliente 3','Direccion 3','6649504578'), ('Cliente 4','Direccion 4','6648405849'), ('Cliente 5','Direccion 5','6649850485');
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 6', 'Direccion 6', '6648940359'), ('Cliente 7','Direccion 7','6649456845'), ('Cliente 8','Direccion 8','6648594034'), ('Cliente 9','Direccion 9','6649405738'),('Cliente 10','Direccion 10','6641589406');\
+\
+
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Crear tabla proveedores\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE proveedores (provClave SERIAL PRIMARY KEY, provNombre VARCHAR(100) NOT NULL, provDireccion VARCHAR(20) NOT NULL, provTelefono VARCHAR(20) NOT NULL);\
+\
+
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Insertar datos en la tabla proveedores\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO proveedores (provNombre, provDireccion, provTelefono) VALUES ('Proveedor 1','Direccion 1','758493045894'), ('Proveedor 2','Direccion 2','8495048573'),('Proveedor 3','Direccion 3','6640493046'), ('Proveedor 4','Direccion 4','5437890267'),('Proveedor 5','Direccion 5','6647532145'), ('Proveedor 6',' Direccion 6','4563789041'),('Proveedor 7','Direccion 7','1234567890'),('Proveedor 8','Direccion 8','0987654321'), ('Proveedor 9','Direccion 9','4563890371'),('Proveedor 10','Direccion 10','7854768903');
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Crear tabla movimientos\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE movimientos (movFolio SERIAL PRIMARY KEY, movTipo INT NOT NULL, movFecha TIMESTAMP WITHOUT TIME ZONE NOT NULL, movClipProv INT NOT NULL, movTotal NUMERIC NOT NULL);  
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+-- Crear tabla movimiento_producto\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE movimiento_producto(movFolio INT, proClave VARCHAR(10), mpCantidad NUMERIC NOT NULL, mpPrecio NUMERIC NOT NULL, mpImporte NUMERCI NOT NULL, PRIMARY KEY (movFolio, proClave), FOREIGN KEY (movFolio) REFERENCES movimientos(movFolio), FOREIGN KEY (proClave) REFERENCES productos(proClave));
+\f0\fs24 \cf0 \CocoaLigature1 \
+}
