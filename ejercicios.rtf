@@ -1,37 +1,37 @@
 {\rtf1\ansi\ansicpg1252\cocoartf2709
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\csgray\c0;}
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c0\c0\c0;}
 \margl1440\margr1440\vieww11520\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 -- Crear base de datos\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0  CREATE DATABASE ejercicios;
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0  CREATE DATABASE ejercicios;
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Conectar a la base de datos\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 \\c ejercicios
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 \\c ejercicios
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Crear tabla departamentos\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE departamentos(depClave SERIAL PRIMARY KEY, depDescripcion VARCHAR(100) NOT NUlL);
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 CREATE TABLE departamentos(depClave SERIAL PRIMARY KEY, depDescripcion VARCHAR(100) NOT NUlL);
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Insertar datos en la tabla departamentos\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO departamentos (depDescripcion) VALUES ('Recursos humanos'), ('Finanzas'),('Tecnologia de la informacion'), ('Marketing'), ('Ventas');
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 INSERT INTO departamentos (depDescripcion) VALUES ('Recursos humanos'), ('Finanzas'),('Tecnologia de la informacion'), ('Marketing'), ('Ventas');
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Crear tabla productos\
@@ -73,50 +73,171 @@ CREATE TABLE clientes (\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 1', 'Direccion 1', '6645568800');
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 1', 'Direccion 1', '6645568800');
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 2', 'Direccion 2', '6645648395'), ('Cliente 3','Direccion 3','6649504578'), ('Cliente 4','Direccion 4','6648405849'), ('Cliente 5','Direccion 5','6649850485');
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 2', 'Direccion 2', '6645648395'), ('Cliente 3','Direccion 3','6649504578'), ('Cliente 4','Direccion 4','6648405849'), ('Cliente 5','Direccion 5','6649850485');
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 6', 'Direccion 6', '6648940359'), ('Cliente 7','Direccion 7','6649456845'), ('Cliente 8','Direccion 8','6648594034'), ('Cliente 9','Direccion 9','6649405738'),('Cliente 10','Direccion 10','6641589406');\
+\fs22 \cf2 \CocoaLigature0 INSERT INTO clientes (cliNombre, clidireccion, clitelefono) VALUES ('Cliente 6', 'Direccion 6', '6648940359'), ('Cliente 7','Direccion 7','6649456845'), ('Cliente 8','Direccion 8','6648594034'), ('Cliente 9','Direccion 9','6649405738'),('Cliente 10','Direccion 10','6641589406');\
 \
 
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Crear tabla proveedores\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE proveedores (provClave SERIAL PRIMARY KEY, provNombre VARCHAR(100) NOT NULL, provDireccion VARCHAR(20) NOT NULL, provTelefono VARCHAR(20) NOT NULL);\
+\fs22 \cf2 \CocoaLigature0 CREATE TABLE proveedores (provClave SERIAL PRIMARY KEY, provNombre VARCHAR(100) NOT NULL, provDireccion VARCHAR(20) NOT NULL, provTelefono VARCHAR(20) NOT NULL);\
 \
 
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Insertar datos en la tabla proveedores\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 INSERT INTO proveedores (provNombre, provDireccion, provTelefono) VALUES ('Proveedor 1','Direccion 1','758493045894'), ('Proveedor 2','Direccion 2','8495048573'),('Proveedor 3','Direccion 3','6640493046'), ('Proveedor 4','Direccion 4','5437890267'),('Proveedor 5','Direccion 5','6647532145'), ('Proveedor 6',' Direccion 6','4563789041'),('Proveedor 7','Direccion 7','1234567890'),('Proveedor 8','Direccion 8','0987654321'), ('Proveedor 9','Direccion 9','4563890371'),('Proveedor 10','Direccion 10','7854768903');
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 INSERT INTO proveedores (provNombre, provDireccion, provTelefono) VALUES ('Proveedor 1','Direccion 1','758493045894'), ('Proveedor 2','Direccion 2','8495048573'),('Proveedor 3','Direccion 3','6640493046'), ('Proveedor 4','Direccion 4','5437890267'),('Proveedor 5','Direccion 5','6647532145'), ('Proveedor 6',' Direccion 6','4563789041'),('Proveedor 7','Direccion 7','1234567890'),('Proveedor 8','Direccion 8','0987654321'), ('Proveedor 9','Direccion 9','4563890371'),('Proveedor 10','Direccion 10','7854768903');
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Crear tabla movimientos\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE movimientos (movFolio SERIAL PRIMARY KEY, movTipo INT NOT NULL, movFecha TIMESTAMP WITHOUT TIME ZONE NOT NULL, movClipProv INT NOT NULL, movTotal NUMERIC NOT NULL);  
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 CREATE TABLE movimientos (movFolio SERIAL PRIMARY KEY, movTipo INT NOT NULL, movFecha TIMESTAMP WITHOUT TIME ZONE NOT NULL, movClipProv INT NOT NULL, movTotal NUMERIC NOT NULL);  
+\fs24 \cf0 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
 -- Crear tabla movimiento_producto\
+CREATE TABLE movimiento_producto (\
+    movFolio INT,\
+    proClave VARCHAR(10),\
+    mpCantidad NUMERIC NOT NULL,\
+    mpPrecio NUMERIC NOT NULL,\
+    mpImporte NUMERIC NOT NULL,\
+    PRIMARY KEY (movFolio, proClave),\
+    FOREIGN KEY (movFolio) REFERENCES movimientos(movFolio),\
+    FOREIGN KEY (proClave) REFERENCES productos(proClave)\
+);\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 -- Inserts (movimientos de entrada y salida)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f1\fs22 \cf2 \CocoaLigature0 CREATE TABLE movimiento_producto(movFolio INT, proClave VARCHAR(10), mpCantidad NUMERIC NOT NULL, mpPrecio NUMERIC NOT NULL, mpImporte NUMERCI NOT NULL, PRIMARY KEY (movFolio, proClave), FOREIGN KEY (movFolio) REFERENCES movimientos(movFolio), FOREIGN KEY (proClave) REFERENCES productos(proClave));
-\f0\fs24 \cf0 \CocoaLigature1 \
+\fs22 \cf2 \CocoaLigature0 insert INTO movimientos (movFolio, movTipo, movFecha, movClipProv, movTotal) Values (1, 1, '2024-06-15 10:00:00',1, 540.00),(2,1,'2024-06-15 12:00:00', 3, 420.00),(3,1, '2024-06-15 10:00:00',5,300.00),(4,1,'2024-06-16 11:00:00',2, 250.00),(5,1, '2024-06-15 9:00:00', 4,630.00),(6,1, '2024-06-15 10:00:00', 1, 450.00),(7,1, '2024-06-16 15:00:00', 6, 390.00), (8,1, '2024-06-17 11:00:00', 8, 560.00),(9,1,'2024-06-15 12:00:00', 10,210.00), (10,1,'2024-06-16 9:00:00',7,490.00);
+\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+INSERT INTO movimientos (movFolio, movTipo, movFecha, movClipProv, movTotal) VALUES (11, 2, '2024-06-15 11:30:00', 2, 660.00), (12, 2, '2024-06-16 14:00:00', 4, 440.00), (13, 2, '2024-06-15 10:00:00', 6, 380.00), (14, 2, '2024-06-17 12:30:00', 8, 590.00), (15, 2, '2024-06-16 10:00:00', 10, 260.00), (16, 2, '2024-06-15 12:00:00', 2, 310.00), (17, 2, '2024-06-17 08:00:00', 5, 550.00), (18, 2, '2024-06-16 15:30:00', 3, 290.00), (19, 2, '2024-06-15 11:00:00', 1, 460.00), (20, 2, '2024-06-17 10:30:00', 7, 350.00);\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \outl0\strokewidth0 \strokec3 INSERT INTO movimiento_producto (movFolio, proClave, mpCantidad, mpPrecio, mpImporte) VALUES (11, P001, 2, 100.00, 200.00), (11, P004, 3, 150.00, 450.00), (11, P007, 1, 120.00, 120.00), (12, P002, 2, 200.00, 400.00), (12, P005, 1, 250.00, 250.00), (12, P010, 1, 110.00, 110.00), (13, P003, 1, 350.00, 350.00), (13, P009, 1, 320.00, 320.00), (14, P006, 2, 350.00, 700.00), (14, P011, 1, 105.00, 105.00), (14, P014, 1, 130.00, 130.00), (15, P008, 2, 120.00, 240.00), (15, P012, 1, 165.00, 165.00), (16, P001, 1, 100.00, 100.00), (16, P004, 2, 150.00, 300.00), (17, P005, 2, 250.00, 500.00), (17, P010, 1, 110.00, 50.00), (18, P007, 2, 120.00, 240.00), (18, P013, 1, 130.00, 130.00), (19, P009, 2, 320.00, 640.00), (19, P012, 1, 165.00, 165.00), (20, P002, 1, 200.00, 200.00), (20, P015, 2, 10.00, 20.00);\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 -- Reportes\
+\
+\'97Reporte 1 Productos ordenados por descripci\'f3n\
+\
+SELECT proClave, proDescripcion, proPrecio, depclave\
+FROM productos\
+ORDER BY proDescripcion;\
+\
+\
+\'97Reporte 2 productos de un departamento especifico ordenados por clave\
+\
+SELECT proClave, proDescripcion, proPrecio\
+FROM productos\
+WHERE depClave = 1\
+ORDER BY proClave;\
+\
+\
+\'97REPORTE 3 Clientes que existen ordenados por nombre\
+\
+SELECT cliClave, cliNombre, cliDireccion, cliTelefono FROM clientes ORDER BY cliNombre;\
+\
+\
+\'97Reporte 4 proveedores ordenados por clave\
+\
+SELECT provClave, pronombre, provDireccion, provTelefono\
+FROM proveedores\
+ORDERY BY provClave; \
+\
+\'97Reporte 5 entradas ordenadas por fecha con nombre de proveedor y total\
+\
+SELECT m.movFolio, m.movFecha, p.provNombre, m.movTotal\
+FROM movimientos m\
+JOIN proveedores p ON m.movClipProV = p.provClave\
+WHERE m.movTipo = 1\
+ORDER BY m.movFecha;\
+\
+\'97Reporte 6: Salidas ordenadas por fecha con nombre de cliente y total\
+\
+\
+SELECT m.movFolio, m.movFecha, c.cliNombre, m.movTotal\
+FROM movimientos m\
+JOIN clientes c ON m.movClipProv = c.cliClave\
+WHERE m.movTipo = 2\
+ORDER BY m.movFecha;\
+\
+\
+\'97Reporte 7: Salidas de un cliente especifico ordenadas por fecha\
+\
+SELECT m.movFolio, m.movFecha, c.cliNombre, m.movTotal FROM movimientos m JOIN clientes C ON m.movClipProv = c.cliClave WHERE m.movTipo = 2 AND m.movClipProv = 1 ORDER BY m.movFecha;\
+\
+\
+\'97Reporte 8 Productos que nunca han utilizado en una salida\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs22 \cf2 \CocoaLigature0  SELECT p.proClave, p.proDescripcion FROM productos p WHERE NOT EXISTS(SELECT 1 FROM movimiento_producto mp WHERE mp.proClave = p.proClave AND EXISTS (SELECT 1 FROM movimientos m WHERE m.movFolio = mp.movFolio AND m.movTipo = 2));
+\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\'97Reporte 9 Producto mas utilizado en movimientos de entrada\
+\
+SELECT mp.proClave, p.proDescripcion, COUNT(*) AS cantidad FROM movimiento_producto mp JOIN productos p ON mp.proClave = p,proClave JOIN movimientos m ON mp.movFolio = m.movFolio WHERE m.movTipo = 1 GROUP BY mp.proClave, p.proDescripcion ORDER BY COUNT(*) DESC LIMIT 1\
+\
+\
+\'97Reporte 10\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs22 \cf2 \CocoaLigature0 SELECT mp.proClave, p.proDescripcion, p.proPrecio - mp.mpPrecio as ganancia FROM movimiento_producto mp JOIN productos p ON mp.proClave = p.proClave JOIN movimientos m ON mp.movFolio = m.movFolio WHERE m.movTipo = 2 ORDER BY ganancia DESC;
+\fs24 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\'97Reporte  Total de compras acumuladas por un d\'eda\
+\
+SELECT DATE(movFecha) AS fecha, SUM(movTotal) AS acumulado_total FROM movimientos WHERE movTipo = 1 GROUP BY DATE(movFecha) ORDER BY fecha;\
+\
+\'97Reporte 12 Total de ventas acumuladas por d\'eda\
+\
+\
+SELECT DATE(movFecha) AS fecha, SUM(movTotal) AS acumulado_total FROM movimientos WHERE movTipo = 2 GROUP BY DATE(movFecha) ORDER BY fecha;\
+\
+\
+\'97Reporte 13 Utilidad obtenida por los movimientos\
+\
+SELECT SUM(CASE WHEN movTipo = 2 THEN movTotal ELSE -movTotal END) AS utilidad_total FROM movimientos;\
+\
+\
+\
+\
 }
