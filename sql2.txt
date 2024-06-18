@@ -1,0 +1,99 @@
+—Queries
+
+
+—1 query que muestre la clave de producto, descripción y linea a la que pertenecen. Para los productos que no tienen linea mostrar la leyenda, ‘LINEA PENDIENTE’
+
+
+SELECT 
+    pro.proClave AS "Clave de Producto",
+    pro.proDescripcion AS "Descripción",
+    COALESCE(lin.linDescripcion, 'LINEA PENDIENTE') AS "Línea"
+FROM 
+    tpi_pro pro
+LEFT JOIN 
+    tpi_lin lin
+ON 
+    pro.proLinea = lin.linClave;
+
+—2 query que muestre los productos que cuente con unidad alternativa…
+
+
+SELECT 
+    pro.proClave AS "Clave de Producto",
+    CASE 
+        WHEN pro.proUnidadl = pro.proUnidadAlternativa AND pro.proConversion = 0 THEN 'CONVERSION INVALIDA'
+        ELSE 'OK'
+    END AS "Mensaje"
+FROM 
+    tpi_pro pro
+WHERE 
+    pro.proUnidadAlternativa IS NOT NULL;
+
+
+—3 Query que muestre la cantidad de productos existentes en el catalogo…
+
+
+SELECT 
+    fam.famClave AS "Clave de Familia",
+    fam.famDescripcion AS "Descripción de Familia",
+    COUNT(pro.proClave) AS "Cantidad de Productos"
+FROM 
+    tpi_fam fam
+LEFT JOIN 
+    tpi_pro pro ON fam.famClave = pro.proFamilia
+GROUP BY 
+    fam.famClave, fam.famDescripcion;
+
+
+—4 Query que muestre todas las clasificaciones..
+
+
+SELECT 
+    claCLAVE AS "Clave de Clasificación",
+    claDescripcion AS "Descripción de Clasificación"
+FROM
+    tpi_cla;
+
+
+ 
+
+—5 Query que muestre todos los productos donde la descripción contenga la palabra tubo
+
+
+
+SELECT 
+    proClave AS "Clave de Producto",
+    proDescripcion AS "Descripción"
+FROM 
+    tpi_pro
+WHERE 
+    proDescripcion LIKE '%tubo%';
+
+
+—6 query que muestre la cantidad total de productos que su descripción comienza con la palabra mang
+
+
+SELECT 
+    COUNT(proClave) AS "Cantidad Total"
+FROM 
+    tpi_pro
+WHERE 
+    proDescripcion LIKE 'MANG %';
+
+—7 Mostrar el precio máximo y mino y promedio de los productos..
+
+
+
+
+SELECT 
+    MAX(proPrecio1) AS "Precio Máximo",
+    MIN(proPrecio1) AS "Precio Mínimo",
+    AVG(proPrecio1) AS "Precio Promedio"
+FROM 
+    tpi_pro
+WHERE 
+    proFamilia = 'AP';
+
+
+
+
