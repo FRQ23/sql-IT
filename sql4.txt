@@ -1,0 +1,198 @@
+-- EJERCICIOS SQL 4
+
+-- 1.- Hacer un query que muestre la clave de producto y en cuantos distintos almacenes(epaAlamcen, si tiene un error de dedo el nombre de la columna en la tabla) se encuentra tomando como base la tabla de estadisticas por almacen.
+
+SELECT
+    epa.prodClave AS clave_producto,
+    COUNT(DISTINCT epa.epaAlamcen) AS cantidad_almacenes
+FROM
+    tpi_epa epa
+GROUP BY
+    epa.prodClave;
+
+
+-- 2.- Hacer un query que muestra los registros de productos que cuentan con estadisticas de producto y tambien aquellos productos obsoletos que cuentan con estadisticas pero ya no existe informacion en el catalogo. NOTA: El query solamente trara 2 columnas, 1 donde indique la clave del producto y la otra columna donde muestre un mensaje del estatus, 'ok', cuando el producto si contiene estadisticas y aun existe en el catalogo. 'no estadisticas', cuando el producto existe en catalogo y no esta existe en estadisticas. 'obsoleto', cuando el producto existen estadisticas pero ya no existe informacion en catalogo.
+
+SELECT 
+    COALESCE(epa.prodclave, pes.prodclave) AS "prodClave",
+    CASE 
+        WHEN epa.prodclave IS NOT NULL AND pes.prodclave IS NOT NULL THEN 'ok'
+        WHEN epa.prodclave IS NOT NULL AND pes.prodclave IS NULL THEN 'no estadisticas'
+        WHEN epa.prodclave IS NULL AND pes.prodclave IS NOT NULL THEN 'obsoleto'
+    END AS "Estatus"
+FROM 
+    tpi_epa epa
+FULL OUTER JOIN 
+    tpi_pes pes 
+ON 
+    epa.prodclave = pes.prodclave;
+
+-- 3.- Hacer un query que muestre todos los productos que cuenten con un valor mayor de 0 como punto maximo(propMax) y que tengan un stock actual (pesPActual) mayor al requerido. NOTA: tomar en cuenta que la tabla de productos maneja el campo de punto maximo como varchar, asi que habra que hacer la conversion necesaria para poder obtener los valores de forma correcta.
+
+SELECT 
+    pes.prodclave AS "prodClave",
+    pes.pesPActual AS "Stock actual",
+    pro.propMax AS "Maximo"
+FROM 
+    tpi_pes pes
+INNER JOIN 
+    tpi_pro pro
+ON 
+    pes.prodclave = pro.proClave
+WHERE 
+    CAST(pro.propMax AS INTEGER) > 0 
+    AND pes.pesPActual > CAST(pro.propMax AS INTEGER);
+
+-- 4.- Hacer un query que muestre todos los productos que ya requieran reordenarce, tomando en cuenta el valor de punto de reorden(propReo) y el stock actual.
+
+SELECT 
+    pes.prodclave AS "prodClave",
+    pes.pesPActual AS "Stock actual",
+    pro.propReo AS "Punto de reorden"
+FROM 
+    tpi_pes pes
+INNER JOIN 
+    tpi_pro pro
+ON 
+    pes.prodclave = pro.proclave
+WHERE 
+    pes.pesPActual <= CAST(pro.propReo AS INTEGER);
+
+
+-- 5.- Hacer un query que muestre la clave del producto y el folio(movNDocumento) del documento mas reciente donde fue utilizado
+
+SELECT 
+    mov.prodclave AS "prodClave",
+    mov.movNDocumento AS "Folio Doc"
+FROM 
+    tpi_mov mov
+WHERE 
+    mov.movFecha = (
+        SELECT MAX(mov2.movFecha) 
+        FROM tpi_mov mov2 
+        WHERE mov2.prodclave = mov.prodclave
+    );
+
+-- 6.- Hacer un query que muestre los productos que se han utilizado en documentos y que tambien tiene se utilizo en inventario NOTA: tomar en cuenta que un docuento es utilizado en documento si existe registro en tpd_cue, un producto se utilizo en inventario si existe registro en tpi_mov
+
+SELECT 
+    cue.prodclave AS "Product Key"
+FROM 
+    tpd_cue cue
+INNER JOIN 
+    tpi_mov mov
+ON 
+    cue.prodclave = mov.prodclave;
+
+-- 7.- Hacer un query que tome todos los producto del catalogo y que muetre uno de los siguientes mensajes. 'No utilizado', si el producto  no se a utilizado en ningun documento. 'Solo en documento', cuando un producto se utilizo en unicamente en un documento pero no en inventario. 'inventario', cuando el producto se utilizo en inventario.
+ 
+SELECT 
+    pro.proclave AS "proClave",
+    CASE 
+        WHEN cue.prodclave IS NULL AND mov.prodclave IS NULL THEN 'No utilizado'
+        WHEN cue.prodclave IS NOT NULL AND mov.prodclave IS NULL THEN 'Solo en documento'
+        WHEN mov.prodclave IS NOT NULL THEN 'Inventario'
+    END AS "Estado"
+FROM 
+    tpi_pro pro
+LEFT JOIN 
+    tpd_cue cue 
+ON 
+    pro.proclave = cue.prodclave
+LEFT JOIN 
+    tpi_mov mov 
+ON 
+    pro.proclave = mov.prodclave;
+
+-- 8.- Tomar los regitros de inventario y obtener la diferencia entre el total de compras y el total de ventas por producto por cada mes/año NOTA: el total de compras y ventas es basado a la cantidad por movimiento utilizada. Se seguira manejando que las compras son los documentos CA1 y las ventas VD30
+
+SELECT 
+    mov.prodclave AS "prodClave",
+    DATE_PART('year', mov.movfecha) AS "Anio",
+    DATE_PART('month', mov.movfecha) AS "Mes",
+    SUM(CASE WHEN mov.movtipo = '1' THEN mov.movcantproducto ELSE 0 END) AS "Total Compras",
+    SUM(CASE WHEN mov.movtipo = '30' THEN mov.movcantproducto ELSE 0 END) AS "Total Ventas",
+    SUM(CASE WHEN mov.movtipo = '1' THEN mov.movcantproducto ELSE 0 END) - 
+    SUM(CASE WHEN mov.movtipo = '30' THEN mov.movcantproducto ELSE 0 END) AS "Diferencia"
+FROM 
+    tpi_mov mov
+GROUP BY 
+    mov.prodclave, 
+    DATE_PART('year', mov.movfecha), 
+    DATE_PART('month', mov.movfecha)
+ORDER BY 
+    "Anio", "Mes", "prodClave";
+
+-- 9.- Hacer un query "validador" que sume todas las capas de un producto (pesCantEps1,pesCantEps2,pesCantEps3,pesCantEps4) y valide que sea la  cantidad de stock actual. NOTA: solo se mostrarn los productos que tienen "problemas"
+
+SELECT 
+    pes.prodclave AS "Product Key",
+    pes.pescanteps1 + pes.pescanteps2 + pes.pescanteps3 + pes.pescanteps4 AS "Total Capas",
+    pes.pespactual AS "Stock Actual"
+FROM 
+    tpi_pes pes
+WHERE 
+    (pes.pescanteps1 + pes.pescanteps2 + pes.pescanteps3 + pes.pescanteps4) <> pes.pespactual;
+
+-- 10.- Hacer un query que muestre el stock actual, el stock por capas, el punto maximo, minimo y de reorden, ademas incluir el folio del ultimo documento de compra y venta que fue utilizado de los productos que pertenescan a la familia de 'RIEGO AGRICOLA'
+
+SELECT 
+    pes.prodclave AS "prodClave",
+    pes.pespactual AS "Stock Actual",
+    pes.pescanteps1 + pes.pescanteps2 + pes.pescanteps3 + pes.pescanteps4 AS "Total Capas",
+    pro.propmax AS "Punto Maximo",
+    pro.propmin AS "Punto Minimo",
+    pro.propreo AS "Punto Reorden",
+    (SELECT mov.movndocumento 
+     FROM tpi_mov mov 
+     WHERE mov.prodclave = pes.prodclave AND mov.movtipo = 1 -- Suponiendo que 1 es el tipo de compra
+     ORDER BY mov.movfecha DESC 
+     LIMIT 1) AS "Ultimo Documento Compra",
+    (SELECT mov.movndocumento 
+     FROM tpi_mov mov 
+     WHERE mov.prodclave = pes.prodclave AND mov.movtipo = 30 -- Suponiendo que 30 es el tipo de venta
+     ORDER BY mov.movfecha DESC 
+     LIMIT 1) AS "Ultimo Documento Venta"
+FROM 
+    tpi_pes pes
+JOIN 
+    tpi_pro pro ON pes.prodclave = pro.proclave
+WHERE 
+    pro.profamilia = 'RIEGO AGRICOLA';
+
+
+
+
+-- EXTRA.- Obtener el tiempo transcurrido entre la ultima compra y la ultima venta registrada en las estadisticas de produto. NOTA: este query requiere de "investigacion" para obtener la forma de obtener la diferencia entre 2 fechas.
+
+WITH UltimaCompra AS (
+    SELECT 
+        prodclave,
+        MAX(movfecha) AS ultima_compra
+    FROM 
+        tpi_mov
+    WHERE 
+        movtipo = 1 
+    GROUP BY 
+        prodclave
+),
+UltimaVenta AS (
+    SELECT 
+        prodclave,
+        MAX(movfecha) AS ultima_venta
+    FROM 
+        tpi_mov
+    WHERE 
+        movtipo = 2 
+    GROUP BY 
+        prodclave
+)
+SELECT 
+    uc.prodclave AS "prodClave",
+    uc.ultima_compra AS "Ultima Compra",
+    uv.ultima_venta AS "Ultima Venta",
+    AGE(uv.ultima_venta, uc.ultima_compra) AS "Tiempo Transcurrido"
+FROM 
+    UltimaCompra uc
+JOIN 
+    UltimaVenta uv ON uc.prodclave = uv.prodclave;
