@@ -1,0 +1,146 @@
+-- EJERCICIOS SQL 3
+
+-- 1.- Hacer un query que obtenga las ultimas 15 facturas realizadas en el mes de febrero del 20214, mostrar la fecha (encFecha), folio(encNoDocumento) cliente (encClieOProv), nombre del cliente (encNombre), tipo de pago (tpaDescripcion.) Nota: Las facturas cuenta con las siguientes características, encGenero: V, encNaturalieza: D, encGrupo: 30. Para obtener el rango de fechas a seleccionar se deberá de tomar en cuenta el campo de encFecha.
+
+SELECT 
+    enc.encFecha, 
+    enc.encNoDocumento, 
+    enc.encClieOProv, 
+    enc.encNombre, 
+    tpa.tpaDescripcion
+FROM 
+    tpd_enc enc
+JOIN 
+    tpd_tpa tpa ON enc.encTipoPago = tpa.tpaClave
+WHERE 
+    enc.encGenero = 'V' 
+    AND enc.encNaturaleza = 'D' 
+    AND enc.encGrupo = 30 
+    AND enc.encFecha BETWEEN '2014-02-01' AND '2014-02-28'
+ORDER BY 
+    enc.encFecha DESC
+LIMIT 15;
+
+-- 2.- Hacer un query que obtenga todas las facturas que aun no han sido pagadas en su totalidad. NOTA: por medio del saldo de documento(encSaldoDoc) se puede identificar cuando una factura ya fue pagada si el valor es 0.
+
+SELECT
+    enc.encFecha,
+    enc.encNoDocumento,
+    enc.encClieOProv,
+    enc.encNombre,
+    enc.encSaldoDoc
+FROM
+    tpd_enc enc
+WHERE
+    enc.encSaldoDoc <> 0;
+
+-- 3.- Hacer un query que obtenga los registros de documentos que la fecha sea distinta a la fecha real de captura (encFechaCaptura)
+
+
+SELECT
+    enc.encFecha,
+    enc.encFechaCaptura,
+    enc.encNoDocumento,
+    enc.encClieOProv,
+    enc.encNombre
+FROM
+    tpd_enc enc
+WHERE
+    en.encFecha <> enc.encFechaCaptura;
+
+-- 4.- Hacer un query que obtenga el producto mas comprado, tomando en consideracioon la suma total de las cantidades (cueCantidad) y no los distintos documentos en los que se ha utilizado. NOTA: los documentos de compras tienen las siguietes caracteristicas, encGenero: C, encNaturaleza: A, encGrupo: 1.
+
+SELECT
+    cue.prodClave AS producto,
+    SUM(cue.cueCantidad) AS cantidad_total
+FROM
+    tpd_cue cue
+JOIN
+    tpd_enc enc ON cue.encNoDocumento = enc.encNoDocumento
+WHERE
+    enc.encGenero = 'C'
+    AND enc.encNaturaleza = 'A'
+    AND enc.encGrupo = 1
+GROUP BY
+    cue.prodClave
+ORDER BY
+    cantidad_total DESC
+LIMIT 1;
+
+-- 5.- Hacer un query que obtenga el numero de folio y el prodcuto que en alguan ocasión se ha comprado en unidad alternativa. NOTA: en el cuerpo del documento se naneja la unidad en que fue realizada el movimiento (cueUnidad) habra que hacer alguna relación que indique con el catalogo de documentos si esas unidad utilizda fue la alternativa o la principal.
+
+SELECT
+    cue.cueNoDocumento AS numero_folio,
+    cue.prodClave AS prodcuto
+FROM
+    tpd_cue cue
+JOIN
+    tpi_pro pro ON cue.prodClave = pro.proClave
+WHERE
+    cue.cueUnidad = pro.proUnidadAlternativa
+GROUP BY
+    cue.cueNoDocumento,
+    cue.prodClave;
+
+-- 6.- Hacer un query que obtenga los productos que existen en el catalogo que no se han utilizado en ningun tipo de movimiento durante el periodo de Noviembre 2013 a Febrero del 2014
+
+SELECT
+    pro.proClave,
+    pro.proDescripcion
+FROM
+    tpi_pro pro
+LEFT JOIN
+    tpd_cue cue ON pro.proClave = cue.prodClave
+    AND cue.cueNoDocumento IN (
+        SELECT
+            cueNoDocumento
+        FROM
+            tpd_cue
+        JOIN
+            tpd_enc ON tpd_cue.encNoDocumento = tpd_enc.encNoDocumento
+        WHERE   
+            encFecha BETWEEN '2013-11-01' AND '2014-02-28'
+    )
+WHERE
+    cue.cueNoDocumento IS NULL;
+
+
+-- 7.- Hacer un query que obtenga todos los productos que han sido comprados y vendidos dentro del mismo mes. NOTA: Solo mostrar los productos que cumplan con esta caracteristica de compra y venta durante el mismo mes, es decir que si un producto X fue comprado durante el mes de enero pero solo tiene venta en diciembre o febrero NO debera estar en la lista
+
+SELECT DISTINCT
+    p.proclave,
+    p.prodescripcion
+FROM
+    tpi_pro p
+JOIN
+    (
+        SELECT 
+            prodclave,
+            DATE_TRUNC('month', enc.encfecha) AS mes
+        FROM 
+            tpd_cue cue
+        JOIN 
+            tpd_enc enc ON cue.cuenodocumento = enc.encnodocumento
+        WHERE 
+            enc.encgenero = 'C'
+            AND enc.encnaturaleza = 'A'
+            AND enc.encgrupo = 1
+        GROUP BY 
+            prodclave, mes
+    ) compras ON p.proclave = compras.prodclave
+JOIN
+    (
+        SELECT 
+            prodclave,
+            DATE_TRUNC('month', enc.encfecha) AS mes
+        FROM 
+            tpd_cue cue
+        JOIN 
+            tpd_enc enc ON cue.cuenodocumento = enc.encnodocumento
+        WHERE 
+            enc.encgenero = 'V'
+            AND enc.encnaturaleza = 'D'
+            AND enc.encgrupo = 30
+        GROUP BY 
+            prodclave, mes
+    ) ventas ON p.proclave = ventas.prodclave AND compras.mes = ventas.mes;
