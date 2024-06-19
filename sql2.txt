@@ -1,99 +1,112 @@
-—Queries
+-- 1.- Hacer un query que muestre la clave del producto, descripción y linea a la que pertenecen.
+-- Para los productos que no tienen linea, mostrar la leyenda, 'LINEA PENDIENTE'
 
 
-—1 query que muestre la clave de producto, descripción y linea a la que pertenecen. Para los productos que no tienen linea mostrar la leyenda, ‘LINEA PENDIENTE’
+SELECT
+    proClave,
+    proDescripcion,
+    COALESCE(tpi_lin.linNombre, 'LINEA PENDIENTE') AS linea
+FROM
+    tpi_pro
+LEFT JOIN tpi_lin ON tpi_pro.proLinea = tpi_lin.linClave;
+
+-- 2.- Hacer un query que muestre todos los prodcutos que cuenta con unidad alternativa (proUnidadAlternativa)
+-- Se mostraran las columnas de la clave del producto y un mensaje de 'CONVERSION INVALIDA' cuando la unidad
+-- principal (proUnidadl) sea igual a la alternativa y cuando el factor de coonversión (proConversion) sea 0.
+-- Si no se cumplen las condiciones, el mensaje deberá decir 'OK'.
 
 
-SELECT 
-    pro.proClave AS "Clave de Producto",
-    pro.proDescripcion AS "Descripción",
-    COALESCE(lin.linDescripcion, 'LINEA PENDIENTE') AS "Línea"
-FROM 
-    tpi_pro pro
-LEFT JOIN 
-    tpi_lin lin
-ON 
-    pro.proLinea = lin.linClave;
-
-—2 query que muestre los productos que cuente con unidad alternativa…
-
-
-SELECT 
-    pro.proClave AS "Clave de Producto",
-    CASE 
-        WHEN pro.proUnidadl = pro.proUnidadAlternativa AND pro.proConversion = 0 THEN 'CONVERSION INVALIDA'
+SELECT
+    proClave,
+    CASE
+        WHEN proUnidadl = proUnidadAlternativa OR proConversion = 0 THEN 'CONVERSION INVALIDA'
         ELSE 'OK'
-    END AS "Mensaje"
-FROM 
-    tpi_pro pro
-WHERE 
-    pro.proUnidadAlternativa IS NOT NULL;
+    END AS conversion_estado
+FROM
+    tpi_pro
+WHERE
+    proUnidadAlternativa IS NOT NULL;
 
 
-—3 Query que muestre la cantidad de productos existentes en el catalogo…
+-- 3.- Hacer un query que muestra la cantidad de productos existentes en el catalogo dependiendo de cada familia
+-- existente en el catalogo de familias. NOTA, tomar como tabla principal las familias para que si existe un
+-- producto que no pertenezca a una familia en especifico mostrar como resultado 0.
 
-
-SELECT 
-    fam.famClave AS "Clave de Familia",
-    fam.famDescripcion AS "Descripción de Familia",
-    COUNT(pro.proClave) AS "Cantidad de Productos"
-FROM 
-    tpi_fam fam
+SELECT
+    tpi_fam.famClave,
+    tpi_fam.famNombre,
+    COUNT(tpi_pro.proClave) AS cantidad_productos
+FROM
+    tpi_fam
 LEFT JOIN 
-    tpi_pro pro ON fam.famClave = pro.proFamilia
-GROUP BY 
-    fam.famClave, fam.famDescripcion;
+    tpi_pro ON tpi_fam.famClave = tpi_pro.proFamilia
+GROUP BY
+    tpi_fam.famClave,
+    tpi_fam.famNombre;
 
+-- 4.- Hacer un query que muestre todas las clasificaciones que se le pueden dar a un producto, es decir que sean,
+-- las lineas, familias y clases que se pueden asignar, además mostrar el tipo que son. Ejemplo:
 
-—4 Query que muestre todas las clasificaciones..
+-- clave descripcion tipo
+-- 0012 BAR linea
+-- 0045 METAL linea
+-- 0654 AP familia
+-- 0549 BM familia
+-- 1598 CODO clase
+-- 1646 SWITCH clase
 
-
-SELECT 
-    claCLAVE AS "Clave de Clasificación",
-    claDescripcion AS "Descripción de Clasificación"
+SELECT
+    linClave AS clave,
+    linNombre AS descripcion,
+    'linea' AS tipo
+FROM
+    tpi_lin
+UNION ALL
+SELECT
+    famCLAVE AS clave,
+    famNombre AS descripcion,
+    'familia' AS tipo
+FROM
+    tpi_fam
+UNION ALL
+SELECT
+    claClave AS clave,
+    claNombre AS descripcion,
+    'clase' AS tipo
 FROM
     tpi_cla;
 
 
- 
-
-—5 Query que muestre todos los productos donde la descripción contenga la palabra tubo
-
-
+-- 5.- Hacer un query que muestre todos los productos donde la descripcion contenga la palbra "TUBO"
 
 SELECT 
-    proClave AS "Clave de Producto",
-    proDescripcion AS "Descripción"
-FROM 
+    proClave,
+    proDescripcion
+FROM
     tpi_pro
-WHERE 
-    proDescripcion LIKE '%tubo%';
+WHERE
+    proDescripcion LIKE '%TUBO%';
 
 
-—6 query que muestre la cantidad total de productos que su descripción comienza con la palabra mang
+-- 6.- Hacer un query que muestre la cantidad total de productos que su descricipcion comienza con la palabra 'MANG'
+-- NOTA: la palabra debera de ser 'MANG' seguida de una nueva palabra, NO podra ser que 'MANG' sea parte de una palabra,
+-- como podria ser en el caso de 'MANGUERA'
 
-
-SELECT 
-    COUNT(proClave) AS "Cantidad Total"
-FROM 
+SELECT
+    COUNT(*) AS cantidad_total
+FROM
     tpi_pro
-WHERE 
-    proDescripcion LIKE 'MANG %';
+WHERE
+    proDescripcion like 'MANG %';
 
-—7 Mostrar el precio máximo y mino y promedio de los productos..
+-- 7.- Mostrar el precio(proPrecio1) maximo, minimo y promedio de los prodcutos que pertenecen a la familia 'AP'.
+-- NOTA: solo mostrar las cantidades, no se requiere visualizar las claves de los productos ni la descripcion.
 
-
-
-
-SELECT 
-    MAX(proPrecio1) AS "Precio Máximo",
-    MIN(proPrecio1) AS "Precio Mínimo",
-    AVG(proPrecio1) AS "Precio Promedio"
-FROM 
+SELECT
+    MAX(proPrecio1) AS precio_maximo,
+    MIN(proPrecio1) AS precio_minimo,
+    AVG(proPrecio1) AS precio_promedio
+FROM
     tpi_pro
-WHERE 
+WHERE
     proFamilia = 'AP';
-
-
-
-
